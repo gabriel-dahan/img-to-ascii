@@ -43,7 +43,11 @@ class Img(object):
             f = open(out_file, 'w')
             for row in aimg: f.write(row + '\n')
             f.close()
-        return aimg 
+            print(f'{out_file} generated !')
+        return aimg
 
 if __name__ == '__main__':
-    print(Img('pdp.jpg').to_ascii(out_file = 'pdp.ascii.txt'))
+    im1 = Img('example-images/exampleimg.jpg')
+    im1.to_ascii(out_file = 'text-outputs/exampleimg.ascii.txt')
+    im2 = Img('example-images/exampleimg2.jpg')
+    im2.to_ascii(out_file = 'text-outputs/exampleimg2.ascii.txt')
