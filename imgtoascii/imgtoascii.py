@@ -16,7 +16,7 @@ class Img(object):
         return np.average(im.reshape(w * h))
 
     def to_ascii(self, more_detail: Optional[bool] = False, scale: Optional[float] = 0.43, cols: Optional[int] = 80, out_file: Optional[str] = False):
-        print('Generating ASCII art...') 
+        print('Generating ASCII art...')
         W, H = self.image.size[0], self.image.size[1]
         w = W / cols
         h = w / scale
@@ -27,22 +27,19 @@ class Img(object):
         aimg = []
         for j in range(rows):
             y1 = int(j * h)
-            y2 = int((j + 1) * h)
-            if j == rows - 1: y2 = H
-            aimg.append("") 
+            y2 = H if j == rows - 1 else int((j + 1) * h)
+            aimg.append("")
             for i in range(cols): 
-                x1 = int(i* w) 
-                x2 = int((i + 1) * w) 
-                if i == cols - 1: x2 = W 
-                img = self.image.crop((x1, y1, x2, y2)) 
-                avg = int(self._get_grayscale(img)) 
+                x1 = int(i* w)
+                x2 = W if i == cols - 1 else int((i + 1) * w)
+                img = self.image.crop((x1, y1, x2, y2))
+                avg = int(self._get_grayscale(img))
                 if more_detail: gs_val = self.chars_70[int((avg * 69) / 255)] 
-                else: gs_val = self.chars_10[int((avg * 9) / 255)] 
+                else: gs_val = self.chars_10[int((avg * 9) / 255)]
                 aimg[j] += gs_val
         if out_file:
-            f = open(out_file, 'w')
-            for row in aimg: f.write(row + '\n')
-            f.close()
+            with open(out_file, 'w') as f:
+                for row in aimg: f.write(row + '\n')
             print(f'{out_file} generated !')
         return aimg
 
